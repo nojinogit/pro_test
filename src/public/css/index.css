@@ -1,0 +1,158 @@
+img {
+  width: 100%;
+  height: auto;
+}
+
+button{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search{
+  max-width: 1500px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.search-area{
+  padding: 5px;
+  margin: 0 auto;
+  width: 50%;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 4px;
+}
+
+.search-area input{
+  border: none;
+  height: 30px;
+  width: 50%;
+  outline: none;
+}
+
+.search-area select {
+  border: none;
+  height: 30px;
+  width: 50%;
+  outline: none;
+}
+
+#category{
+  border-right: 1px solid gainsboro;
+  width: 20%;
+}
+
+#area {
+  border-right: 1px solid gainsboro;
+  width: 20%;
+}
+
+.flex__item {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 100px auto;
+}
+
+
+.shop-wrap {
+  margin: 20px auto;
+  justify-content: space-around;
+}
+
+.shop-wrap__item {
+  width: 300px;
+  margin:10px;
+  display: block;
+  box-shadow: 10px 10px 15px -10px;
+  border-radius:15px;
+}
+
+.shop-wrap__item-content {
+  background: #fff;
+  border-radius: 0 0 15px 15px;
+  padding: 20px;
+}
+
+.shop-wrap__item-bottom{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.shop-wrap__item-eyecatch {
+  border-radius: 15px 15px 0 0;
+  height: 200px;
+}
+
+.shop-wrap__item-content-tag {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 20px;
+  display: inline;
+}
+
+.heart{
+    width: 40px;
+    height: auto;
+  }
+
+.detail{
+  text-decoration: none;
+  padding:10px;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+}
+
+.none{
+  display: none;
+}
+
+.responsive{
+  display: none;
+}
+
+@media screen and (max-width : 768px) {
+  .default{
+      display: none;
+  }
+
+  .responsive{
+    display:block;
+  }
+
+  .search-area input {
+    width: 100%;
+    border: 1px solid black;
+    height: 30px;
+  }
+
+  .search-area select {
+    width: 100%;
+    border: 1px solid black;
+    height: 30px;
+  }
+
+  #category {
+    width: 100%;
+  }
+
+  #area {
+    width: 100%;
+  }
+
+  .shop-wrap {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .shop-wrap__item{
+    margin: 20px auto;
+  }
+}
