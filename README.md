@@ -47,23 +47,22 @@ jquery:3.4.1/
 
 #環境構築  
 ・.env.example をコピーし.env を作成  
-・composer の依存関係をインストール『docker run --rm \
- -u "$(id -u):$(id -g)" \
- -v $(pwd):/var/www/html \
- -w /var/www/html \
- laravelsail/php82-composer:latest \
- composer install --ignore-platform-reqs』  
-・docker-compose.yml の存在するディレクトリにて「./vendor/bin/sail up -d」  
-・コンポーザのアップデート「./vendor/bin/sail composer update」  
-・APP_KEY の作成「./vendor/bin/sail artisan key:generate」  
-・テーブルの作成「./vendor/bin/sail artisan migrate」もしくは「./vendor/bin/sail artisan migrate:fresh」※私の環境では「fresh」をつけないと git hub からクローンしたプロジェクトではテーブルを作成できませんでした  
-・店舗データ・マスターユーザの作成「./vendor/bin/sail artisan db:seed」  
-・シンボリックリンク作成「./vendor/bin/sail artisan storage:link」  
-・Node.js インストール「./vendor/bin/sail npm install && ./vendor/bin/sail npm run build」  
+・.env の　 DB_DATABASE=laravel_db DB_USERNAME=laravel_user DB_PASSWORD=laravel_pass を記載  
+・docker-compose.yml の存在するディレクトリにて「docker-compose up -d --build」  
+・php コンテナに入る「docker-compose exec php bash」  
+・コンポーザのアップデート「composer update」  
+・APP_KEY の作成「php artisan key:generate」  
+・テーブルの作成「php artisan migrate」もしくは「php artisan migrate:fresh」※私の環境では「fresh」をつけないと git hub からクローンしたプロジェクトではテーブルを作成できませんでした  
+・店舗データ・マスターユーザの作成「php artisan db:seed」  
+・シンボリックリンク作成「php artisan storage:link」  
+・php コンテナから「exit」し node コンテナに入る「docker-compose exec node bash」  
+・npm インストール「npm install && npm run build」  
+・権限のエラーが出た場合は「sudo chmod -R 777 src」にて権限解除してください  
 以上でアプリ使用可能です「localhost/」にて店舗検索ページ開きます。  
-管理者ユーザがいますので『admin@admin』でパスワードリセットかけてパスワード再設定をお願いします。  
-メールは Mailpit に届いています。
+管理者ユーザがいますので『admin@admin』でパスワードリセットからパスワード再設定をお願いします。  
+メールは Mailpit「localhost:8025/」 に届いています。
 
 ##備考  
-決済システム stripe にはアカウント作成後にテスト環境の公開キー・シークレットキーを.env ファイルの STRIPE_PUBLIC_KEY=　 STRIPE_SECRET_KEY=　に入れてコンテナを up しなおして下さい。  
-スケジューラーのテストは『./vendor/bin/sail artisan schedule:work』にて行ってください。
+決済システム stripe にはアカウント作成後にテスト環境の公開キー・シークレットキーを.env ファイルの STRIPE_PUBLIC_KEY=　 STRIPE_SECRET_KEY=　に下さい。  
+スケジューラーのテストは『php artisan schedule:work』にて行ってください。  
+予約時間の 1 時間後になるとレビュー箇所が店舗詳細にでてきますので、phpmyadmin「localhost:8080/」から当日予約を作成し、スケジューラーを動かしてテストしてください。
