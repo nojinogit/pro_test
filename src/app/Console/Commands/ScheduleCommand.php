@@ -31,7 +31,7 @@ class ScheduleCommand extends Command
     {
         $mailLists=Reserve::with('user','shop')->whereDate('date',Carbon::today())->get();
         foreach($mailLists as $mailList){
-            $mailer->to($mailList->user->email)->send(new InformMail($mailList->user->name,$mailList->date,$mailList->time,$mailList->shop->name));
+            $mailer->to($mailList->user->email)->send(new InformMail($mailList->user->name,$mailList->date,$mailList->time,$mailList->shop->name,$mailList->hc,$mailList->recommendation));
         }
 
         return 0;

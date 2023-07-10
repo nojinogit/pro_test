@@ -25,14 +25,6 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/',[ShopController::class,'index'])->name('index');
 Route::get('/detail/{id}',[ShopController::class,'detail'])->name('detail');
 Route::get('/search',[SearchController::class,'search'])->name('search');
@@ -65,12 +57,12 @@ Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
 
 Route::group(['middleware' => ['auth', 'can:manager_admin']], function () {
     Route::get('/managementIndex', [ManagementController::class,'managementIndex'])->name('managementIndex');
-    Route::get('/representativeShop', [ManagementController::class,'representativeShop'])->name('representativeShop');
     Route::get('/shopUpdateIndex', [ManagementController::class,'shopUpdateIndex'])->name('shopUpdateIndex');
     Route::get('/shopReserve', [ManagementController::class,'shopReserve'])->name('shopReserve');
     Route::post('/shopCreate', [ManagementController::class,'shopCreate'])->name('shopCreate');
     Route::put('/shopUpdate', [ManagementController::class,'shopUpdate'])->name('shopUpdate');
     Route::get('/informMail', [ManagementController::class,'informMail'])->name('informMail');
+    //Route::get('/representativeShop', [ManagementController::class,'representativeShop'])->name('representativeShop');
 });
 
 
