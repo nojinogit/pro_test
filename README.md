@@ -1,4 +1,4 @@
-# web-second
+# web-2-1
 
 予約システム『Rese』
 <<img width="1882" alt="Rese index" src="https://github.com/nojinogit/web-second/assets/127584258/9409a87d-d71e-406b-849f-ec3294d9b5d2">>
