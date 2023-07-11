@@ -62,7 +62,6 @@ Route::group(['middleware' => ['auth', 'can:manager_admin']], function () {
     Route::post('/shopCreate', [ManagementController::class,'shopCreate'])->name('shopCreate');
     Route::put('/shopUpdate', [ManagementController::class,'shopUpdate'])->name('shopUpdate');
     Route::get('/informMail', [ManagementController::class,'informMail'])->name('informMail');
-    //Route::get('/representativeShop', [ManagementController::class,'representativeShop'])->name('representativeShop');
 });
 
 
