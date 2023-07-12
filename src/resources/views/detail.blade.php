@@ -151,7 +151,7 @@
         $('#output-recommendation').text('');
         }
     });
-});
+    });
 </script>
 
 

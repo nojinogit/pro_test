@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReserveController;
