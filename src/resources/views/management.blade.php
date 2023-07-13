@@ -193,7 +193,7 @@
                 @if(session('message'))
                 <div class="message">
                     <div class="message__success">
-                        <p class="message__success--p" id="session" style="color:blue;">{{session('message')}}</p>
+                        <p class="message__success--p" id="session">{{session('message')}}</p>
                     </div>
                 </div>
                 @endif

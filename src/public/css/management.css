@@ -115,3 +115,7 @@ tr:first-child{
     border: none;
 }
 
+.message__success--p{
+    color: blue;
+}
+

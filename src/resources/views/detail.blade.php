@@ -75,7 +75,7 @@
                 @if(session('message'))
                 <div class="message">
                     <div class="message__false">
-                        <p class="message__false--p" id="session" style="color:red;">{{session('message')}}</p>
+                        <p class="message__false--p" id="session">{{session('message')}}</p>
                     </div>
                 </div>
                 @endif

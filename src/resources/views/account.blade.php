@@ -127,7 +127,7 @@
         @if(session('message'))
             <div class="message">
                 <div class="message__success">
-                    <p class="message__success--p" id="session" style="color:blue;">{{session('message')}}</p>
+                    <p class="message__success--p" id="session">{{session('message')}}</p>
                 </div>
             </div>
         @endif
@@ -271,12 +271,12 @@
         <h2>店舗代表者設定</h2>
         @if(session('representativeFalse'))
             <div class="message">
-                <p class="representativeMessage" id="session" style="color:red;">{{session('representativeFalse')}}</p>
+                <p class="representativeMessageFalse" id="session">{{session('representativeFalse')}}</p>
             </div>
         @endif
         @if(session('representativeSuccess'))
             <div class="message">
-                <p class="representativeMessage" id="session" style="color:blue;">{{session('representativeSuccess')}}</p>
+                <p class="representativeMessageSuccess" id="session">{{session('representativeSuccess')}}</p>
             </div>
         @endif
         <div>

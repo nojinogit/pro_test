@@ -100,3 +100,15 @@ tr:first-child{
     color:red;
 }
 
+.message__success--p{
+    color: blue;
+}
+
+.representativeMessageFalse{
+    color: red;
+}
+
+.representativeMessageSuccess{
+    color: blue;
+}
+

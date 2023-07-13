@@ -63,6 +63,8 @@ jquery:3.4.1/
 <img width="624" alt="rese-ER" src="https://github.com/nojinogit/web-second/assets/127584258/4d2975c8-13dd-4688-8736-1776acdf2202">
 
 #環境構築  
+・プロジェクトをコピーしたいディレクトリにて「git clone https://github.com/nojinogit/web-2-1.git」を行いプロジェクトをコピー  
+・「cd web-2-1/src」を行い.env.example のあるディレクトリに移動  
 ・.env.example をコピーし.env を作成  
 ・.env の　 DB_DATABASE=laravel_db DB_USERNAME=laravel_user DB_PASSWORD=laravel_pass を記載  
 ・docker-compose.yml の存在するディレクトリにて「docker-compose up -d --build」  
@@ -76,10 +78,11 @@ jquery:3.4.1/
 ・npm インストール「npm install && npm run build」  
 ・権限のエラーが出た場合は「sudo chmod -R 777 src」にて権限解除してください  
 以上でアプリ使用可能です「localhost/」にて店舗検索ページ開きます。  
-管理者ユーザがいますので『admin@admin』でパスワードリセットからパスワード再設定をお願いします。  
-メールは Mailpit「localhost:8025/」 に届いています。
+管理者ユーザ『admin@admin』がいますのでパスワードリセットからパスワード再設定をお願いします。  
+パスワードリセットメール等は Mailpit「localhost:8025/」 に届いています。
 
 ##備考  
 決済システム stripe にはアカウント作成後にテスト環境の公開キー・シークレットキーを.env ファイルの STRIPE_PUBLIC_KEY=　 STRIPE_SECRET_KEY=　に下さい。  
 スケジューラーのテストは『php artisan schedule:work』にて行ってください。  
-予約時間の 1 時間後になるとレビュー箇所が店舗詳細にでてきますので、phpmyadmin「localhost:8080/」から当日予約を作成し、スケジューラーを動かしてテストしてください。
+予約時間の 1 時間後になるとレビュー箇所が店舗詳細にでてきますので、phpmyadmin「localhost:8080/」から当日予約を作成し、スケジューラーを動かしてテストしてください。  
+github のファイルではローカルで環境が完結した方がよいと考え、画像ファイルは storage/app/public/sample に保存されます。デプロイしたアプリでは s3 に保存されるコードにしております。
