@@ -79,8 +79,8 @@ jquery:3.4.1/
 ・npm インストール「npm install && npm run build」  
 ・権限のエラーが出た場合は「sudo chmod -R 777 src」にて権限解除してください  
 以上でアプリ使用可能です「localhost/」にて店舗検索ページ開きます。  
-管理者ユーザ『admin@admin』がいますのでパスワードリセットからパスワード再設定をお願いします。  
-パスワードリセットメール等は Mailpit「localhost:8025/」 に届いています。
+管理者ユーザメールアドレス『admin@admin』パスワード『123456789』でログイン可能です。  
+パスワードリセットメール・認証メール・お知らせメールは Mailpit「localhost:8025/」 に届きます。
 
 ##備考  
 決済システム stripe にはアカウント作成後にテスト環境の公開キー・シークレットキーを.env ファイルの STRIPE_PUBLIC_KEY=　 STRIPE_SECRET_KEY=　に下さい。  
