@@ -18,7 +18,7 @@ button{
 .search-area{
   padding: 5px;
   margin: 0 auto;
-  width: 50%;
+  width: 60%;
   border-radius: 5px;
   background-color: white;
   box-shadow: 2px 2px 4px;
@@ -27,7 +27,7 @@ button{
 .search-area input{
   border: none;
   height: 30px;
-  width: 50%;
+  width: 40%;
   outline: none;
 }
 
