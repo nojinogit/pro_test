@@ -58,7 +58,7 @@ mailpit/
 jquery:3.4.1/
 
 #テーブル設計  
-<img width="1083" alt="テーブル仕様書" src="https://github.com/nojinogit/web-second/assets/127584258/ef431b2a-bbc8-4586-8e1b-dd329cd234b7">
+<img width="1152" alt="テーブル仕様書" src="https://github.com/nojinogit/web-2-1/assets/127584258/0c549868-2804-4005-a64f-d99afeb3e270">
 
 #ER 図  
 <img width="624" alt="rese-ER" src="https://github.com/nojinogit/web-second/assets/127584258/4d2975c8-13dd-4688-8736-1776acdf2202">
