@@ -100,6 +100,7 @@
                     <p><label for="">店舗名</label>&emsp;<input type="text" name="name" value="{{$shopUpdate->name}}"></p>
                     <p><label for="">都道府県</label>&emsp;<input type="text" name="area"  value="{{$shopUpdate->area}}"></p>
                     <p><label for="">ジャンル</label>&emsp;<input type="text" name="category"  value="{{$shopUpdate->category}}"></p>
+                    <p><label for="">座席数</label>&emsp;<input type="text" name="seat"  value="{{$shopUpdate->seat}}"></p>
                     <p>店舗概要&emsp;<textarea name="overview" cols="50" rows="8"></textarea></p>
                     <p><label for="">店舗画像</label>&emsp;<input type="file" name="image"></p>
                     <button type="submit">更新</button>

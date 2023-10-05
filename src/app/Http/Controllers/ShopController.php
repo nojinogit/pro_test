@@ -19,15 +19,17 @@ class ShopController extends Controller
     public function detail($id){
     $shop=Shop::find($id);
     $reviews=Review::with('user')->where('shop_id',$id)->whereNot('score')->get();
+    $reviewCount=$reviews->count();
+    $averageScore=round($reviews->avg('score'), 1);
     if(!empty(Auth::user()->id)){
         $reviewArea=Review::where('user_id',Auth::user()->id)->where('shop_id',$id)->first();
         if(!empty($reviewArea->score)){
-            return view('/detail',compact('shop','reviews'));
+            return view('/detail',compact('shop','reviews','averageScore','reviewCount'));
         }
         elseif(empty($reviewArea->score)){
-            return view('/detail',compact('shop','reviewArea','reviews'));
+            return view('/detail',compact('shop','reviewArea','reviews','averageScore','reviewCount'));
         }
     }
-    return view('/detail',compact('shop','reviews'));
+    return view('/detail',compact('shop','reviews','averageScore','reviewCount'));
     }
 }

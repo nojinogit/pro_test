@@ -24,17 +24,18 @@ class ReserveRequest extends FormRequest
         return [
             'date' => 'required|after_or_equal:tomorrow',
             'time' => 'required|after_or_equal:11:00|before_or_equal:22:00',
-            'hc' => 'required'
+            'hc' => 'required|integer|min:1|max:' . $this->input('remaining'),
         ];
     }
 
     public function messages()
     {
     return [
-    'date.after_or_equal' => '予約日は翌日以降を指定してください。',
-    'hc.required' => '人数は必ず指定してください。',
-    'time.after_or_equal' => '予約時間は11：00以降を指定してください。',
-    'time.before_or_equal' => '予約時間は22：00以前を指定してください。',
+    'date.after_or_equal' => '予約日は翌日以降を指定してください',
+    'hc.required' => '人数は必ず指定してください',
+    'hc.max' => '予約可能人数を超えています',
+    'time.after_or_equal' => '予約時間は11：00以降を指定してください',
+    'time.before_or_equal' => '予約時間は22：00以前を指定してください',
     ];
 }
 }

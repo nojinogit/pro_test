@@ -12,6 +12,8 @@ use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\GithubLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +32,17 @@ Route::get('/search',[SearchController::class,'search'])->name('search');
 Route::get('/thanksRegister', function () {return view('/thanksRegister');});
 Route::get('/thanksReserve', function () {return view('/thanksReserve');});
 Route::get('/representativeReserve/{id}',[MyPageController::class,'representativeReserve'])->name('representativeReserve');
+Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth']);
+Route::get('login/google/callback', [GoogleLoginController::class, 'authGoogleCallback']);
+Route::get('/auth/github/redirect', [GithubLoginController::class, 'getGithubAuth']);
+Route::get('login/github/callback', [GithubLoginController::class, 'authGithubCallback']);
+Route::post('/reserveSeat',[ReserveController::class,'reserveSeat'])->name('reserveSeat');
 
 Route::middleware(['auth','verified'])->group(function () {
     Route::get('/myPage',[MyPageController::class,'myPage'])->name('myPage');
     Route::get('/recommendationAdd',[MyPageController::class,'recommendationAdd'])->name('recommendationAdd');
     Route::post('/reserveAdd',[ReserveController::class,'reserveAdd'])->name('reserveAdd');
+    Route::post('/reserveSeatUpdate',[ReserveController::class,'reserveSeatUpdate'])->name('reserveSeatUpdate');
     Route::delete('/reserveDelete',[ReserveController::class,'reserveDelete'])->name('reserveDelete');
     Route::put('/reserveUpdate',[ReserveController::class,'reserveUpdate'])->name('reserveUpdate');
     Route::post('/favoriteStore',[FavoriteController::class,'favoriteStore'])->name('favoriteStore');

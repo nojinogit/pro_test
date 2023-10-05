@@ -77,7 +77,7 @@ p {
   flex-direction: row-reverse;
 }
 
-#confirm-button {
+.confirm-button {
   width: 15%;
   background-color: rgb(0, 60, 255);
   border: 2px solid white;
@@ -87,7 +87,7 @@ p {
   cursor: pointer;
 }
 
-#input-date {
+.input-date {
   height: 40px;
   width: 80%;
   border-radius: 5px;
@@ -95,7 +95,7 @@ p {
   margin-left: 5.5%;
 }
 
-#input-time {
+.input-time {
   height: 40px;
   width: 80%;
   border-radius: 5px;
@@ -103,7 +103,7 @@ p {
   margin-left: 5.5%;
 }
 
-#input-number {
+.input-number {
   height: 40px;
   width: 80%;
   border-radius: 5px;
@@ -191,8 +191,15 @@ button {
 
 .error {
   list-style: none;
-  color: white;
+  text-align: center;
+  color:red;
 }
+
+.alert-success{
+    list-style: none;
+    text-align: center;
+    color: blue;
+  }
 
 .none{
   display: none;

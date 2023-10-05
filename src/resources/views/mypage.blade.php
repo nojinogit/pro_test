@@ -9,6 +9,14 @@
 @section('content')
     <div class="container">
         <h1>ようこそ&emsp;{{ Auth::user()->name }}さん！</h1>
+        @if (session('message'))
+            <div class="alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+        @foreach ($errors->all() as $error)
+            <li class="error">{{$error}}</li>
+        @endforeach
         @if(Auth::user()->role > 9)
             <h2>当日予約状況</h2>
             <div class="qr-area">
@@ -24,22 +32,24 @@
             <div class="reserve-wrap">
                 <h2>予約状況</h2>
                 <div class="reserve-wrap__item">
-                    @foreach($reserves as $reserve)
+                    @foreach($reserves as $key => $reserve)
                         <div class="reserve-confirmation">
                             <div class="reserve-confirmation-area  {{$reserve->id}}">
                                 <div class="reserve-confirmation-area-head">
                                     <img src="{{ asset('svg/時計.svg')}}" alt="" id="clock">
                                     <span id="reserve-num">予約{{$loop->iteration}}</span>
-                                    <form action="{{route('reserveDelete')}}" method="post">
-                                        @method('delete')
-                                        @csrf
-                                        <input type="hidden" value="{{$reserve->id}}" name="id">
-                                        <button class="button" type="submit">予約取り消し</button>
-                                    </form>
-                                    <form class="update-button">
-                                        <input type="hidden" value="{{$reserve->id}}" name="id">
-                                        <button class="button" type="submit">予約更新</button>
-                                    </form>
+                                    @if($reserve->date != \Carbon\Carbon::now()->format('Y-m-d'))
+                                        <form action="{{route('reserveDelete')}}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <input type="hidden" value="{{$reserve->id}}" name="id">
+                                            <button class="button" type="submit">予約取り消し</button>
+                                        </form>
+                                        <form class="update-button" id="update-button_{{$key}}">
+                                            <input type="hidden" value="{{$reserve->id}}" name="id">
+                                            <button class="button" type="submit">予約更新</button>
+                                        </form>
+                                    @endif
                                 </div>
                                 <p><label>shop</label>&emsp;<span>{{$reserve->shop->name}}</span></p>
                                 <p><label>date</label>&emsp;<span id="output-date">{{$reserve->date}}</span></p>
@@ -66,17 +76,19 @@
                                 <form action="{{route('reserveUpdate')}}" method="post">
                                     @method('put')
                                     @csrf
-                                    <input type="hidden" value="{{$reserve->id}}" name="id">
+                                    <input type="hidden" value="{{$reserve->id}}" name="id" id="reserve-id_{{$key}}">
+                                    <input type="hidden" value="{{$reserve->shop->id}}" name="shop_id" id="shop_id_{{$key}}">
+                                    <input type="hidden" name="remaining" class="remaining_{{$key}}" value="">
                                     <p><label>shop</label>&emsp;<span>{{$reserve->shop->name}}</span></p>
-                                    <p><label>date</label>&emsp;<input type="date" name="date" id="input-date" value="{{$reserve->date}}"></p>
-                                    <p><label>time</label>&emsp;<input type="time" name="time" id="input-time" value="{{$reserve->time}}"></p>
-                                    <p><label>number</label>&emsp;<input type="number" max="10" min="1" name="hc" id="input-number" value="{{$reserve->hc}}"></p>
+                                    <p><label>date</label>&emsp;<input type="date" name="date" id="input-date_{{$key}}" class="input-date" value="{{$reserve->date}}"></p>
+                                    <p><label>time</label>&emsp;<input type="time" name="time" id="input-time_{{$key}}" class="input-time" value="{{$reserve->time}}"></p>
+                                    <p><label>number</label>&emsp;<input type="number" min="0" name="hc" id="input-number_{{$key}}" value="{{$reserve->hc}}" class="input-number"></p>
                                     <div class="confirm-button-area">
-                                        <button id="confirm-button" type="submit">確定</button>
+                                        <button id="confirm-button_{{$key}}" type="submit" class="confirm-button">確定</button>
+                                        <p id="date-alert_{{$key}}" class="none">変更可能日時は翌日以降です</p>
+                                        <p id="time-alert_{{$key}}" class="none">予約可能時間は11：00～22：00です</p>
                                     </div>
-                                    @foreach ($errors->all() as $error)
-                                    <li class="error">{{$error}}</li>
-                                    @endforeach
+                                    <p class="reserve-seat-change-p none" id="reserve-seat-change-p_{{$key}}">ご希望の日時の予約可能席数は、<span class="remaining_{{$key}}" id="remaining_{{$key}}"></span>席です</p>
                                 </form>
                             </div>
                         </div>
@@ -138,21 +150,87 @@
         });
 
         $(function() {
-            $('.update-button').on('submit', function(event){
-            event.preventDefault();
-            const reserve_id=$(this).find('input[name="id"]').val();
-            $('.'+reserve_id).toggleClass('none');
-            });
-            });
-
-        $(function() {
             $('.cancel-button').on('submit', function(event){
             event.preventDefault();
             const reserve_id=$(this).find('input[name="id"]').val();
             $('.'+reserve_id).toggleClass('none');
             });
             });
-            
+
+
+
+    $(function() {
+    function updateReserve(id) {
+
+        var date = $('#input-date_' + id).val();
+        var originTime = $('#input-time_' + id).val().trim();
+        var timeParts = originTime.split(':');
+        var time = timeParts[0] + ':' + timeParts[1];
+        var shop_id = $('#shop_id_' + id).val();
+        var reserve_id = $('#reserve-id_' + id).val();
+        var token = $('input[name="_token"]').val();
+
+        console.log(reserve_id);
+
+        if (date && time) {
+            $.ajax({
+                url:"{{ route('reserveSeatUpdate') }}",
+                method: 'post',
+                data: {
+                    date: date,
+                    time: time,
+                    reserve_id:reserve_id,
+                    shop_id: shop_id,
+                    _token: $('input[name="_token"]').val()
+                },
+                dataType: "json",
+            }).done(function(res){
+                $('.remaining_' + id).text(res.remaining);
+                $('input[name="remaining"]').val(res.remaining);
+                var time = res.time;
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+                var selectedDate = new Date(date);
+                selectedDate.setHours(0, 0, 0, 0);
+                if(selectedDate <= today){
+                    $('#reserve-seat-change-p_' + id).addClass('none');
+                    $('#confirm-button_' + id).addClass('none');
+                    $('#date-alert_' + id).removeClass('none');
+                    $('#time-alert_' + id).addClass('none');
+                }
+                else if (time >= '11:00' && time <= '22:00') {
+                    $('#reserve-seat-change-p_' + id).removeClass('none');
+                    $('#confirm-button_' + id).removeClass('none');
+                    $('#date-alert_' + id).addClass('none');
+                    $('#time-alert_' + id).addClass('none');
+                }else{
+                    $('#reserve-seat-change-p_' + id).addClass('none');
+                    $('#confirm-button_' + id).addClass('none');
+                    $('#time-alert_' + id).removeClass('none');
+                    $('#date-alert_' + id).addClass('none');
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                alert('通信の失敗をしました: ' + textStatus + ', ' + errorThrown);
+            });
+        }
+    }
+
+    $('[id^=update-button_]').on('click', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id').split('_')[1];
+        const reserve_id=$(this).find('input[name="id"]').val();
+        $('.'+reserve_id).toggleClass('none');
+        $('#input-number_' + id).val(0);
+        updateReserve(id);
+    });
+
+    $('[id^=input-date], [id^=input-time]').on('change', function() {
+        var id = this.id.split('_')[1];
+        $('#input-number_' + id).val(0);
+        $('#reserve-seat-p_' + id).addClass('none');
+        updateReserve(id);
+    });
+    });
     </script>
 
 @endsection

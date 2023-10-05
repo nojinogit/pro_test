@@ -63,6 +63,9 @@ class ManagementController extends Controller
     if($request->category!==null){
     $shop['category']=$request->category;}
 
+    if($request->seat!==null){
+    $shop['seat']=$request->seat;}
+
     if($request->overview!==null){
     $shop +=array('overview'=>$request->overview);}
 
