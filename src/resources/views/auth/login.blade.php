@@ -46,18 +46,5 @@
             </x-primary-button>
         </div>
     </form>
-    <div class="form-group row mt-2">
-        <div class="col-md-8 offset-md-4">
-            <a href="/auth/redirect" class="btn btn-secondary" role="button">
-                <img src="{{ asset('png/btn_google_signin_dark_pressed_web@2x.png')}}" alt="googleLogin" style="width:50%">
-            </a>
-        </div>
-    </div>
-    <div class="form-group row mt-2">
-        <div class="col-md-8 offset-md-4">
-            <a href="/auth/github/redirect" class="btn btn-secondary" role="button">
-                <img src="{{ asset('jpg/github.jpg')}}" alt="githubLogin" style="width:60%;margin-left:-20px;">
-            </a>
-        </div>
-    </div>
+    
 </x-guest-layout>

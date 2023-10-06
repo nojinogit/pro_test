@@ -237,6 +237,17 @@
         </div>
     </div>
 
+    <div class="upload">
+    <p>DBに追加したいCSVデータを選択してください。</p>
+        <form action="/csv/upload/" method="post" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="csvdata" />
+        <button>送信</button>
+        </form>
+    </div>
+
+    
+
 </main>
 
 @endsection

@@ -16,7 +16,6 @@ class Shop extends Model
         'overview',
         'image_name',
         'path',
-        'seat',
     ];
 
     public function scopeNameSearch($query,$name){

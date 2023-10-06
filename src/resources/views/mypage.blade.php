@@ -85,10 +85,7 @@
                                     <p><label>number</label>&emsp;<input type="number" min="0" name="hc" id="input-number_{{$key}}" value="{{$reserve->hc}}" class="input-number"></p>
                                     <div class="confirm-button-area">
                                         <button id="confirm-button_{{$key}}" type="submit" class="confirm-button">確定</button>
-                                        <p id="date-alert_{{$key}}" class="none">変更可能日時は翌日以降です</p>
-                                        <p id="time-alert_{{$key}}" class="none">予約可能時間は11：00～22：00です</p>
                                     </div>
-                                    <p class="reserve-seat-change-p none" id="reserve-seat-change-p_{{$key}}">ご希望の日時の予約可能席数は、<span class="remaining_{{$key}}" id="remaining_{{$key}}"></span>席です</p>
                                 </form>
                             </div>
                         </div>
@@ -150,87 +147,21 @@
         });
 
         $(function() {
-            $('.cancel-button').on('submit', function(event){
+            $('.update-button').on('submit', function(event){
             event.preventDefault();
             const reserve_id=$(this).find('input[name="id"]').val();
             $('.'+reserve_id).toggleClass('none');
             });
             });
 
-
-
-    $(function() {
-    function updateReserve(id) {
-
-        var date = $('#input-date_' + id).val();
-        var originTime = $('#input-time_' + id).val().trim();
-        var timeParts = originTime.split(':');
-        var time = timeParts[0] + ':' + timeParts[1];
-        var shop_id = $('#shop_id_' + id).val();
-        var reserve_id = $('#reserve-id_' + id).val();
-        var token = $('input[name="_token"]').val();
-
-        console.log(reserve_id);
-
-        if (date && time) {
-            $.ajax({
-                url:"{{ route('reserveSeatUpdate') }}",
-                method: 'post',
-                data: {
-                    date: date,
-                    time: time,
-                    reserve_id:reserve_id,
-                    shop_id: shop_id,
-                    _token: $('input[name="_token"]').val()
-                },
-                dataType: "json",
-            }).done(function(res){
-                $('.remaining_' + id).text(res.remaining);
-                $('input[name="remaining"]').val(res.remaining);
-                var time = res.time;
-                var today = new Date();
-                today.setHours(0, 0, 0, 0);
-                var selectedDate = new Date(date);
-                selectedDate.setHours(0, 0, 0, 0);
-                if(selectedDate <= today){
-                    $('#reserve-seat-change-p_' + id).addClass('none');
-                    $('#confirm-button_' + id).addClass('none');
-                    $('#date-alert_' + id).removeClass('none');
-                    $('#time-alert_' + id).addClass('none');
-                }
-                else if (time >= '11:00' && time <= '22:00') {
-                    $('#reserve-seat-change-p_' + id).removeClass('none');
-                    $('#confirm-button_' + id).removeClass('none');
-                    $('#date-alert_' + id).addClass('none');
-                    $('#time-alert_' + id).addClass('none');
-                }else{
-                    $('#reserve-seat-change-p_' + id).addClass('none');
-                    $('#confirm-button_' + id).addClass('none');
-                    $('#time-alert_' + id).removeClass('none');
-                    $('#date-alert_' + id).addClass('none');
-                }
-            }).fail(function(jqXHR, textStatus, errorThrown){
-                alert('通信の失敗をしました: ' + textStatus + ', ' + errorThrown);
+        $(function() {
+            $('.cancel-button').on('submit', function(event){
+            event.preventDefault();
+            const reserve_id=$(this).find('input[name="id"]').val();
+            $('.'+reserve_id).toggleClass('none');
             });
-        }
-    }
-
-    $('[id^=update-button_]').on('click', function(e) {
-        e.preventDefault();
-        var id = $(this).attr('id').split('_')[1];
-        const reserve_id=$(this).find('input[name="id"]').val();
-        $('.'+reserve_id).toggleClass('none');
-        $('#input-number_' + id).val(0);
-        updateReserve(id);
-    });
-
-    $('[id^=input-date], [id^=input-time]').on('change', function() {
-        var id = this.id.split('_')[1];
-        $('#input-number_' + id).val(0);
-        $('#reserve-seat-p_' + id).addClass('none');
-        updateReserve(id);
-    });
-    });
+            });
     </script>
+
 
 @endsection

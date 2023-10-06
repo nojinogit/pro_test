@@ -33,8 +33,6 @@
             <div class="reserve">
                 <div class="reserve-top">
                     <h2>予約</h2>
-                    <p class="reserve-seat-p none">ご希望の時間の予約可能席数は、あと<span class="remaining" id="remaining"></span>席です</p>
-                    <p class="reserve-seat-full none">※ご希望の時間は満席となっております※</p>
                 </div>
                 <form action="{{route('reserveAdd')}}" method="post">
                     @csrf
@@ -171,54 +169,6 @@
     });
     });
 
-    $(function() {
-    $('#input-date, #input-time').on('change', function() {
-        var date = $('#input-date').val();
-        var time = $('#input-time').val();
-        var shop_id = $('#shop_id').val();
-        var token = $('input[name="_token"]').val();
-
-        if (date && time) {
-            $.ajax({
-                url:"{{ route('reserveSeat') }}",
-                method: 'POST',
-                data: {
-                    date: date,
-                    time: time,
-                    shop_id: shop_id,
-                    _token: $('input[name="_token"]').val()
-                },
-                dataType: "json",
-            }).done(function(res){
-                $('.remaining').text(res.remaining);
-                $('input[name="remaining"]').val(res.remaining);
-                var time = res.time;
-                var today = new Date();
-                today.setHours(0, 0, 0, 0);
-                var selectedDate = new Date(date);
-                selectedDate.setHours(0, 0, 0, 0);
-                if(selectedDate <= today){
-                    $('.reserve-seat-full').addClass('none');
-                    $('.reserve-seat-p').addClass('none');
-                }
-                else if(res.remaining==0){
-                    $('.reserve-seat-full').removeClass('none');
-                    $('.reserve-seat-p').addClass('none');
-                }
-                else if (time >= '11:00' && time <= '22:00') {
-                    $('.reserve-seat-p').removeClass('none');
-                    $('.reserve-seat-full').addClass('none');
-                }else{
-                    $('.reserve-seat-p').addClass('none');
-                    $('.reserve-seat-full').addClass('none');
-                }
-                        }).fail(function(jqXHR, textStatus, errorThrown){
-                alert('通信の失敗をしました: ' + textStatus + ', ' + errorThrown);
-                        });
-                }
-    });
-
-});
 </script>
 
 

@@ -17,7 +17,6 @@ return new class extends Migration
         $table->string('area');
         $table->string('category');
         $table->string('overview');
-        $table->integer('seat');
         $table->string('image_name')->nullable();
         $table->string('path')->nullable();
         $table->timestamps();
