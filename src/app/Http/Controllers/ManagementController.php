@@ -18,7 +18,9 @@ class ManagementController extends Controller
     public function managementIndex(Request $request){
 
     $shops=Representative::with('shop')->where('user_id',Auth::user()->id)->get();
-    return view('/management',compact('shops'));
+    $count=$request->count;
+    $image_string=$request->image_string;
+    return view('/management',compact('shops','count','image_string'));
     }
 
     public function shopUpdateIndex(Request $request){

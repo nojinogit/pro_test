@@ -237,7 +237,9 @@
         </div>
     </div>
 
-    <div class="upload">
+    @if(Auth::user()->role > 99)
+    <div>
+        <div class="upload">
     <p>DBに追加したいCSVデータを選択してください。</p>
         <form action="/csv/upload/" method="post" enctype="multipart/form-data">
         @csrf
@@ -245,9 +247,11 @@
         <button>送信</button>
         </form>
     </div>
-
-    
-
+    @isset($count)
+    <p>{{$count}}件更新しました</p>
+    @endisset
+    </div>
+    @endif
 </main>
 
 @endsection

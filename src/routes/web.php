@@ -12,7 +12,7 @@ use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\csvController;
+use App\Http\Controllers\CsvController;
 
 
 /*
@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
     Route::post('/representativeAdd', [RepresentativeController::class,'representativeAdd'])->name('representativeAdd');
     Route::delete('/representativeDelete', [RepresentativeController::class,'representativeDelete'])->name('representativeDelete');
     Route::get('/representativeSearch', [RepresentativeController::class,'representativeSearch'])->name('representativeSearch');
+    Route::post('csv/upload',  [CsvController::class,'upload'])->name('upload');
+    Route::post('csv/encode',  [CsvController::class,'encode'])->name('encode');
 });
 
 Route::group(['middleware' => ['auth', 'can:manager_admin']], function () {
@@ -63,7 +65,6 @@ Route::group(['middleware' => ['auth', 'can:manager_admin']], function () {
     Route::post('/shopCreate', [ManagementController::class,'shopCreate'])->name('shopCreate');
     Route::put('/shopUpdate', [ManagementController::class,'shopUpdate'])->name('shopUpdate');
     Route::get('/informMail', [ManagementController::class,'informMail'])->name('informMail');
-    Route::post('csv/upload',  [csvController::class,'upload'])->name('upload');
 });
 
 require __DIR__.'/auth.php';
