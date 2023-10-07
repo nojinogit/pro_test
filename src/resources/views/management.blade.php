@@ -100,7 +100,6 @@
                     <p><label for="">店舗名</label>&emsp;<input type="text" name="name" value="{{$shopUpdate->name}}"></p>
                     <p><label for="">都道府県</label>&emsp;<input type="text" name="area"  value="{{$shopUpdate->area}}"></p>
                     <p><label for="">ジャンル</label>&emsp;<input type="text" name="category"  value="{{$shopUpdate->category}}"></p>
-                    <p><label for="">座席数</label>&emsp;<input type="text" name="seat"  value="{{$shopUpdate->seat}}"></p>
                     <p>店舗概要&emsp;<textarea name="overview" cols="50" rows="8"></textarea></p>
                     <p><label for="">店舗画像</label>&emsp;<input type="file" name="image"></p>
                     <button type="submit">更新</button>
@@ -183,13 +182,13 @@
 
     <div class="main__add--table">
         <h2>新規店舗作成</h2>
-        @if (count($errors) > 0)
+            @if (count($errors) > 0)
                 <ul class="error">
                 @foreach ($errors->all() as $error)
                 <li>{{$error}}</li>
                 @endforeach
                 </ul>
-                @endif
+            @endif
             <div id="time"></div>
                 @if(session('message'))
                 <div class="message">
@@ -240,7 +239,7 @@
     @if(Auth::user()->role > 99)
     <div>
         <div class="upload">
-    <p>DBに追加したいCSVデータを選択してください。</p>
+    <p>CSVファイルにより店舗を追加することができます</p>
         <form action="/csv/upload/" method="post" enctype="multipart/form-data">
         @csrf
         <input type="file" name="csvdata" />
@@ -248,7 +247,7 @@
         </form>
     </div>
     @isset($count)
-    <p>{{$count}}件更新しました</p>
+    <p class="count">{{$count}}件追加しました</p>
     @endisset
     </div>
     @endif

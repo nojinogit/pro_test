@@ -13,6 +13,7 @@ use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CsvController;
+use App\Http\Controllers\KutikomiController;
 
 
 /*
@@ -45,6 +46,9 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::delete('/reviewDelete',[ReviewController::class,'reviewDelete'])->name('reviewDelete');
     Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
     Route::put('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/kutikomi/{id}',[KutikomiController::class,'kutikomiIndex'])->name('kutikomiIndex');
+    Route::post('/kutikomiCreate',[KutikomiController::class,'kutikomiCreate'])->name('kutikomiCreate');
+    Route::post('/kutikomiUpdate',[KutikomiController::class,'kutikomiUpdate'])->name('kutikomiUpdate');
 });
 
 Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
@@ -55,7 +59,6 @@ Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
     Route::delete('/representativeDelete', [RepresentativeController::class,'representativeDelete'])->name('representativeDelete');
     Route::get('/representativeSearch', [RepresentativeController::class,'representativeSearch'])->name('representativeSearch');
     Route::post('csv/upload',  [CsvController::class,'upload'])->name('upload');
-    Route::post('csv/encode',  [CsvController::class,'encode'])->name('encode');
 });
 
 Route::group(['middleware' => ['auth', 'can:manager_admin']], function () {

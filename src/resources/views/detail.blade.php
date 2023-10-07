@@ -28,6 +28,11 @@
                         </p>
                         <p>※予約可能時間&emsp;11：00～22：00</p>
                     </div>
+                    @if(Auth::user()->role == 1)
+                    <div>
+                        <a href="{{route('kutikomiIndex',['id' => $shop->id])}}" method="get" name="id">口コミを投稿する</a>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="reserve">

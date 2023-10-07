@@ -61,6 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Review::class);
     }
 
+    public function kutikomis(){
+        return $this->hasMany(Kutikomi::class);
+    }
+
     public function scopeNameSearch($query,$name){
         if(!empty($name)){
             $query->where('name','like','%'.$name.'%');

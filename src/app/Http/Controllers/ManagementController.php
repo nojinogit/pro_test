@@ -19,8 +19,7 @@ class ManagementController extends Controller
 
     $shops=Representative::with('shop')->where('user_id',Auth::user()->id)->get();
     $count=$request->count;
-    $image_string=$request->image_string;
-    return view('/management',compact('shops','count','image_string'));
+    return view('/management',compact('shops','count'));
     }
 
     public function shopUpdateIndex(Request $request){
@@ -64,9 +63,6 @@ class ManagementController extends Controller
 
     if($request->category!==null){
     $shop['category']=$request->category;}
-
-    if($request->seat!==null){
-    $shop['seat']=$request->seat;}
 
     if($request->overview!==null){
     $shop +=array('overview'=>$request->overview);}
