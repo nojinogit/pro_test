@@ -102,43 +102,12 @@ button {
   display: inline;
 }
 
-.reserve-input{
-  padding-left:3%;
-}
-
-.reserve-top{
-  display: flex;
-  align-items: center;
-}
-
-
-.reserve-seat-p {
-  color: white;
-  padding: 20px 0 0 20px;
-}
-
-.reserve-seat-full {
-  color: white;
-  padding: 20px 0 0 20px;
-}
-
 .none{
   display: none;
 }
 
 #session {
   color:blue;
-}
-
-.reserve-confirmation{
-  background-color:rgba(0, 208, 255, 0.495);
-  border-radius: 5px;
-  margin: 3%;
-}
-
-.reserve-confirmation-area{
-  padding: 3%;
-  color: white;
 }
 
 #button{
@@ -155,7 +124,7 @@ button {
 
 .error{
   list-style: none;
-  color:white;
+  color:red;
 }
 
 .review-area{
@@ -222,7 +191,7 @@ button {
 }
 
 .submit{
-  width: 500px;
+  width: 50%;
   margin: 30px auto;
   border: none;
   text-align: center;
@@ -287,7 +256,7 @@ button {
   left: 0;
   overflow: hidden;
   white-space: nowrap;
-  color: #ffcf32;
+  color: blue;
   /* イエローカラー 自由に設定化 */
 }
 
@@ -515,6 +484,11 @@ button {
       display: block;
     }
 
+    .box-message {
+      position: absolute;
+      left:70%;
+    }
+
   .shop-wrap__item {
     width: 300px;
     margin: 2% auto;
@@ -529,6 +503,7 @@ button {
   .review-area {
     margin: 50px auto 0;
     width: 80%;
+    border: none;
   }
 
   .review-main {
@@ -540,6 +515,8 @@ button {
   textarea{
     width:100%;
   }
+
+
 }
 
 

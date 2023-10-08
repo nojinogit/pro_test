@@ -77,6 +77,13 @@
                         </div>
                     </div>
                     @endif
+                    @if (count($errors) > 0)
+                        <div class="error">
+                        @foreach ($errors->all() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                        </div>
+                    @endif
                     <form action="{{route('kutikomiCreate')}}" method="post" id="form1" enctype="multipart/form-data">
                         <input type="hidden" value="{{$shop->id}}" name="shop_id">
                         @csrf
@@ -122,7 +129,15 @@
                         </div>
                     </div>
                     @endif
+                    @if (count($errors) > 0)
+                        <div class="error">
+                        @foreach ($errors->all() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                        </div>
+                    @endif
                     <form action="{{route('kutikomiUpdate')}}" method="post" id="form2" enctype="multipart/form-data">
+                        <input type="hidden" value="{{$kutikomi->id}}" name="id">
                         <input type="hidden" value="{{$shop->id}}" name="shop_id">
                         @csrf
                         <div class="rate-form">
@@ -146,7 +161,7 @@
                             <p>画像の追加</p>
                             <div class="upload-box">
                             <div class="preview-box">
-                                <img src="{{asset($kutikomi->path)}}" class="previewImg" alt="画像プレビュー">
+                                <img src="{{asset($kutikomi->path)}}" class="previewImg" alt="">
                             </div>
                             <div class="box-message">
                                 <input type="file" accept="image/*" id="input" name="image" hidden/>

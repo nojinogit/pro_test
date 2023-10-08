@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('kutikomi')->nullable();
             $table->string('path')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

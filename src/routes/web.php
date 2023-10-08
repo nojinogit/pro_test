@@ -30,9 +30,11 @@ use App\Http\Controllers\KutikomiController;
 Route::get('/',[ShopController::class,'index'])->name('index');
 Route::get('/detail/{id}',[ShopController::class,'detail'])->name('detail');
 Route::get('/search',[SearchController::class,'search'])->name('search');
+Route::get('/sorting',[SearchController::class,'sorting'])->name('sorting');
 Route::get('/thanksRegister', function () {return view('/thanksRegister');});
 Route::get('/thanksReserve', function () {return view('/thanksReserve');});
 Route::get('/representativeReserve/{id}',[MyPageController::class,'representativeReserve'])->name('representativeReserve');
+Route::get('/kutikomiAll/{id}',[KutikomiController::class,'kutikomiAll'])->name('kutikomiAll');
 
 Route::middleware(['auth','verified'])->group(function () {
     Route::get('/myPage',[MyPageController::class,'myPage'])->name('myPage');
@@ -49,6 +51,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/kutikomi/{id}',[KutikomiController::class,'kutikomiIndex'])->name('kutikomiIndex');
     Route::post('/kutikomiCreate',[KutikomiController::class,'kutikomiCreate'])->name('kutikomiCreate');
     Route::post('/kutikomiUpdate',[KutikomiController::class,'kutikomiUpdate'])->name('kutikomiUpdate');
+    Route::delete('/kutikomiDelete',[KutikomiController::class,'kutikomiDelete'])->name('kutikomiDelete');
 });
 
 Route::group(['middleware' => ['auth', 'can:admin_only']], function () {

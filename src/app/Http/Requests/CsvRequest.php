@@ -22,7 +22,7 @@ class CsvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'csvdata' => 'required|file|mimes:csv',
+            'csvdata' => 'required|file|mimes:csv,txt',
         ];
     }
 
@@ -30,6 +30,6 @@ class CsvRequest extends FormRequest
     {
     return [
     'csvdata.required' => 'csvファイルを選択してください',
-    'csvdata.mimes' => 'csvファイルを選択してください',
+    'csvdata.mimes' => '選択されたファイルはcsv形式である必要があります',
     ];}
 }

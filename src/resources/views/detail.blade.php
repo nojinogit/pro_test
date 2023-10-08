@@ -28,11 +28,49 @@
                         </p>
                         <p>※予約可能時間&emsp;11：00～22：00</p>
                     </div>
-                    @if(Auth::user()->role == 1)
+                    <div class="kutikomi-all-div">
+                        <a href="{{route('kutikomiAll',['id' => $shop->id])}}" method="get" class="kutikomi-all-a">全ての口コミ情報</a>
+                    </div>
+                    @Auth
+                    @if(Auth::user()->role == 1 && !$kutikomi)
                     <div>
-                        <a href="{{route('kutikomiIndex',['id' => $shop->id])}}" method="get" name="id">口コミを投稿する</a>
+                        <a href="{{route('kutikomiIndex',['id' => $shop->id])}}" method="get" name="id" class="kutikomi-create-a">口コミを投稿する</a>
                     </div>
                     @endif
+                    @endAuth
+                    @isset($kutikomi)
+                    <div class="kutikomi-main">
+                        <div class="kutikomi-menu">
+                            <div>
+                                <form action="{{route('kutikomiIndex',['id' => $shop->id])}}">
+                                    <button class="kutikomi-button">口コミを編集</button>
+                                </form>
+                            </div>
+                            <div>
+                                <form action="{{route('kutikomiDelete')}}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" value="{{$kutikomi->id}}" name="id">
+                                    <input type="hidden" value="{{$kutikomi->shop_id}}" name="shop_id">
+                                    <button class="kutikomi-button">口コミを削除</button>
+                                </form>
+                            </div>
+                        </div>
+                        <p>
+                            <span class="star5_kutikomi" data-rate="{{$kutikomi->score}}" id="star5_rating_kutikomi"></span>
+                        </p>
+                        <div class="flex__item kutikomi-area">
+                            <div class="kutikomi-photo">
+                                @if($kutikomi->path)
+                                <img src="{{asset($kutikomi->path)}}" alt="写真">
+                                @endif
+                            </div>
+                            <div class="kutikomi-p">
+                                <p>{{$kutikomi->kutikomi}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endisset
                 </div>
             </div>
             <div class="reserve">

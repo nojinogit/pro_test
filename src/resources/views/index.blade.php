@@ -8,6 +8,23 @@
 
 @section('content')
     <div class="search">
+        @Auth
+        @if(Auth::user()->role == 1)
+        <div class="sorting-area default">
+            <form action="{{route('sorting')}}" method="get">
+            <select value="sorting" name="sorting" onchange="this.form.submit()">
+                <option value="">並べ替え：評価高/低</option>
+                <option value="random">ランダム</option>
+                <option value="avg_high">評価が高い順</option>
+                <option value="avg_low">評価が低い順</option>
+            </select>
+            @auth
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            @endauth
+            </form>
+        </div>
+        @endif
+        @endAuth
         <div class="search-area default">
             <form action="{{route('search')}}" method="get">
             <select value="all area" id="area" name="area" <!--onchange="this.form.submit()"-->>
@@ -29,30 +46,49 @@
             <button type="submit">search</button>
             </form>
         </div>
-        <div class="search-area responsive">
-            <form action="{{route('search')}}" method="get">
-            <p>
-                <select value="all area" id="area" name="area" <!--onchange="this.form.submit()"-->>
-                <option value="">all area</option>
-                @foreach($areas as $area)
-                <option value="{{$area->area}}">{{$area->area}}</option>
-                @endforeach
+        <div class="responsive-search responsive">
+            @Auth
+            @if(Auth::user()->role == 1)
+            <div class="sorting-area responsive-search-sorting responsive">
+                <form action="{{route('sorting')}}" method="get">
+                <select value="sorting" name="sorting" onchange="this.form.submit()">
+                    <option value="">並べ替え：評価高/低</option>
+                    <option value="random">ランダム</option>
+                    <option value="avg_high">評価が高い順</option>
+                    <option value="avg_low">評価が低い順</option>
                 </select>
-            </p>
-            <p>
-                <select value="all genre" id="category"  name="category" <!--onchange="this.form.submit()"-->>
-                <option value="">all genre</option>
-                @foreach($categories as $category)
-                <option value="{{$category->category}}">{{$category->category}}</option>
-                @endforeach
-                </select>
-            </p>
-            <p><input type="search" placeholder="Search" id="search"  name="name"></p>
-            @auth
-            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-            @endauth
-            <p><button type="submit">search</button></p>
-            </form>
+                @auth
+                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                @endauth
+                </form>
+            </div>
+            @endif
+            @endAuth
+            <div class="search-area responsive">
+                <form action="{{route('search')}}" method="get">
+                <p>
+                    <select value="all area" id="area" name="area" <!--onchange="this.form.submit()"-->>
+                    <option value="">all area</option>
+                    @foreach($areas as $area)
+                    <option value="{{$area->area}}">{{$area->area}}</option>
+                    @endforeach
+                    </select>
+                </p>
+                <p>
+                    <select value="all genre" id="category"  name="category" <!--onchange="this.form.submit()"-->>
+                    <option value="">all genre</option>
+                    @foreach($categories as $category)
+                    <option value="{{$category->category}}">{{$category->category}}</option>
+                    @endforeach
+                    </select>
+                </p>
+                <p><input type="search" placeholder="Search" id="search"  name="name"></p>
+                @auth
+                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                @endauth
+                <p><button type="submit">search</button></p>
+                </form>
+            </div>
         </div>
     </div>
     <div class="container">
@@ -61,7 +97,13 @@
             <div class="shop-wrap__item">
                 <img src="{{asset($shop->path)}}" class="shop-wrap__item-eyecatch">
                 <div class="shop-wrap__item-content">
-                    <h2>{{$shop->name}}</h2>
+                    <div class="flex__item name-score">
+                        <h2>{{$shop->name}}</h2>
+                        <p class="result-rating-rate">
+                        <span class="star5_rating" data-rate="{{ round($shop->kutikomis_avg_score, 1) }}"></span>
+                        <span class="number_rating">{{ round($shop->kutikomis_avg_score, 1) }}</span>
+                    </p>
+                    </div>
                     <div>
                         <p class="shop-wrap__item-content-tag">#{{$shop->area}}</p>
                         <p class="shop-wrap__item-content-tag">#{{$shop->category}}</p>

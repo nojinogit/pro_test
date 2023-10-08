@@ -20,10 +20,16 @@ class CsvController extends Controller
     $spath = storage_path('app/');
     $path = $spath.$request->file('csvdata')->storeAs('',$orgName);
 
-    $converted_file = $spath . "converted_" . $orgName;
-    $this->convertFileEncode($path, 'sjis-win', $converted_file, 'UTF-8', "\r\n");
+    $file_content = file_get_contents($path);
+    $encoding = mb_detect_encoding($file_content, 'UTF-8, SJIS-win', true);
 
-    $result = (new FastExcel)->configureCsv(',')->importSheets($converted_file);
+    if ($encoding !== 'UTF-8') {
+        $converted_file = $spath . "converted_" . $orgName;
+        $this->convertFileEncode($path, 'sjis-win', $converted_file, 'UTF-8', "\r\n");
+        $path = $converted_file;
+    }
+
+    $result = (new FastExcel)->configureCsv(',')->importSheets($path);
 
     $dataForValidation = [];
     foreach ($result->first() as $item) {
@@ -41,7 +47,7 @@ class CsvController extends Controller
         '*.area' => 'required|string|in:東京都,大阪府,福岡県',
         '*.category' => 'required|string|in:寿司,焼肉,イタリアン,居酒屋,ラーメン',
         '*.overview' => 'required|string|max:400',
-        '*.url' => 'required|string|url|image_url|max:5120',
+        '*.url' => 'required|string|url|image_mime|max:5120',
     ];
 
     $customMessages = [
@@ -61,19 +67,36 @@ class CsvController extends Controller
     '*.url.required' => 'URLは必須項目です。',
     '*.url.string' => 'URLは文字列で入力してください。',
     '*.url.url' => '有効なURLを入力してください。',
-    '*.url.image_url' => '画像はjpg・jpeg・pngである必要があります。',
+    '*.url.image_mime' => '画像はjpg・jpeg・pngである必要があります。',
     '*.url.max' => '画像のサイズは5MB以下である必要があります。',
     ];
 
         $validator = Validator::make($dataForValidation, $rules,$customMessages);
 
-    if ($validator->fails()) {
-            $errors = $validator->errors();
-            $uniqueErrors = $errors->unique();
-            Storage::delete($orgName);
-            Storage::delete("converted_" . $orgName);
-            return redirect(route('managementIndex'))->withErrors($uniqueErrors);
+        $validator->after(function ($validator) use ($dataForValidation) {
+        foreach ($validator->errors()->messages() as $key => $messages) {
+            list($line_num, $item_name) = explode('.', $key);
+            $line_num = $line_num + 1;
+            $item_name_ja = [
+                'name' => '店舗名',
+                'area' => 'エリア',
+                'category' => 'カテゴリ',
+                'overview' => '概要',
+                'url' => 'URL',
+            ][$item_name];
+            foreach ($messages as $index => $message) {
+                $validator->errors()->forget($key);
+                $validator->errors()->add($key, "CSVファイルの{$line_num}行目の{$item_name_ja}にエラーがあります。{$message}");
+            }
         }
+        });
+
+        if ($validator->fails()) {
+                $errors = $validator->errors();
+                Storage::delete($orgName);
+                Storage::delete("converted_" . $orgName);
+                return redirect(route('managementIndex'))->withErrors($errors);
+            }
 
     $count = 0;
     foreach ($result as $row) {

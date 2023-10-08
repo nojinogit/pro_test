@@ -24,5 +24,21 @@ class AppServiceProvider extends ServiceProvider
             return preg_match('/\.(jpg|jpeg|png)$/i', $value);
         });
 
+        Validator::extend('image_mime', function ($attribute, $value, $parameters, $validator) {
+            $allowedMimes = ['image/jpeg', 'image/png'];
+            $urlParts = parse_url($value);
+            $imageUrl = $urlParts['scheme'] . '://' . $urlParts['host'] . $urlParts['path'];
+            try {
+                $headers = get_headers($imageUrl, 1);
+                if (isset($headers['Content-Type'])) {
+                    $contentType = is_array($headers['Content-Type']) ? end($headers['Content-Type']) : $headers['Content-Type'];
+                    return in_array($contentType, $allowedMimes);
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+            return false;
+        });
+
     }
 }
