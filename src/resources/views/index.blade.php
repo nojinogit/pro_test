@@ -8,8 +8,6 @@
 
 @section('content')
     <div class="search">
-        @Auth
-        @if(Auth::user()->role == 1)
         <div class="sorting-area default">
             <form action="{{route('sorting')}}" method="get">
             <select value="sorting" name="sorting" onchange="this.form.submit()">
@@ -23,8 +21,6 @@
             @endauth
             </form>
         </div>
-        @endif
-        @endAuth
         <div class="search-area default">
             <form action="{{route('search')}}" method="get">
             <select value="all area" id="area" name="area" <!--onchange="this.form.submit()"-->>
@@ -47,8 +43,6 @@
             </form>
         </div>
         <div class="responsive-search responsive">
-            @Auth
-            @if(Auth::user()->role == 1)
             <div class="sorting-area responsive-search-sorting responsive">
                 <form action="{{route('sorting')}}" method="get">
                 <select value="sorting" name="sorting" onchange="this.form.submit()">
@@ -62,8 +56,6 @@
                 @endauth
                 </form>
             </div>
-            @endif
-            @endAuth
             <div class="search-area responsive">
                 <form action="{{route('search')}}" method="get">
                 <p>

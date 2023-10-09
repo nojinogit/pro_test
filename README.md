@@ -1,7 +1,7 @@
-# web-2-1
+# 飲食店予約システム・PRO 入会テスト
 
 予約システム『Rese』
-<<img width="1882" alt="Rese index" src="https://github.com/nojinogit/web-second/assets/127584258/9409a87d-d71e-406b-849f-ec3294d9b5d2">>
+<img width="1882" alt="Rese index" src="https://github.com/nojinogit/web-second/assets/127584258/9409a87d-d71e-406b-849f-ec3294d9b5d2">
 
 #作成の目的  
 外部の飲食店予約サービスは手数料を取られるので自社で予約サービスを持ちたい。
@@ -78,7 +78,7 @@ jquery:3.4.1/
 以上でアプリ使用可能です「localhost/」にて店舗検索ページ開きます。  
 管理者ユーザメールアドレス『admin@admin』パスワード『123456789』でログイン可能です。  
 店舗ユーザメールアドレス『aaa@aaa』パスワード『123456789』でログイン可能です。  
-一般ユーザメールアドレス『bbb@bbb,ccc@ccc,ddd@ddd』パスワード『123456789』でログイン可能です。  
+一般ユーザメールアドレス 3 アカウント『bbb@bbb,ccc@ccc,ddd@ddd』パスワード『123456789』でログイン可能です。  
 パスワードリセットメール・認証メール・お知らせメールは Mailpit「localhost:8025/」 に届きます。
 
 ##備考  
