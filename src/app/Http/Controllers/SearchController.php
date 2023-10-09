@@ -34,7 +34,7 @@ class SearchController extends Controller
             ->select('shops.*')
             ->selectRaw('AVG(kutikomis.score) as kutikomis_avg_score')
             ->groupBy('shops.id')
-            ->orderByRaw('ISNULL(kutikomis_avg_score), kutikomis_avg_score DESC')
+            ->orderBy('kutikomis_avg_score', 'DESC')
             ->get();
         $areas=Shop::select('area')->distinct()->get();
         $categories=Shop::select('category')->distinct()->get();
