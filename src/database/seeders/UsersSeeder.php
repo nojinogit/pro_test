@@ -40,6 +40,24 @@ class UsersSeeder extends Seeder
         'role' => '1',
         'created_at' => now(),
     ];DB::table('users')->insert($param);
+    $param = [
+        'id' => '4',
+        'name' => 'ccc',
+        'email' => 'ccc@ccc',
+        'email_verified_at' => now(),
+        'password' => bcrypt('123456789'),
+        'role' => '1',
+        'created_at' => now(),
+    ];DB::table('users')->insert($param);
+    $param = [
+        'id' => '5',
+        'name' => 'ddd',
+        'email' => 'ddd@ddd',
+        'email_verified_at' => now(),
+        'password' => bcrypt('123456789'),
+        'role' => '1',
+        'created_at' => now(),
+    ];DB::table('users')->insert($param);
 
     }
 
