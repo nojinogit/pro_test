@@ -23,6 +23,10 @@ class CsvController extends Controller
     $file_content = file_get_contents($path);
     $encoding = mb_detect_encoding($file_content, 'UTF-8, SJIS-win', true);
 
+    if ($encoding !== 'UTF-8' && $encoding !== 'SJIS-win') {
+        return redirect(route('managementIndex'))->with('error', '無効な文字コードです。');
+    }
+
     if ($encoding !== 'UTF-8') {
         $converted_file = $spath . "converted_" . $orgName;
         $this->convertFileEncode($path, 'sjis-win', $converted_file, 'UTF-8', "\r\n");

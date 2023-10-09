@@ -189,6 +189,11 @@
                 @endforeach
                 </ul>
             @endif
+            @if (session('error'))
+                <div class="error">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div id="time"></div>
                 @if(session('message'))
                 <div class="message">
