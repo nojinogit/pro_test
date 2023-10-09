@@ -24,6 +24,7 @@ class CsvController extends Controller
     $encoding = mb_detect_encoding($file_content, 'UTF-8, SJIS-win', true);
 
     if ($encoding !== 'UTF-8' && $encoding !== 'SJIS-win') {
+        Storage::delete($orgName);
         return redirect(route('managementIndex'))->with('error', '無効な文字コードです。');
     }
 
