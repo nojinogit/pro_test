@@ -55,10 +55,10 @@ mailpit/
 jquery:3.4.1/
 
 #テーブル設計  
-<img width="1152" alt="テーブル仕様書" src="https://github.com/nojinogit/web-2-1/assets/127584258/0c549868-2804-4005-a64f-d99afeb3e270">
+<img width="916" alt="テーブル仕様書" src="https://github.com/nojinogit/pro_test/assets/127584258/6d77b0b8-fee6-40f6-9566-8be588c1e9be">
 
 #ER 図  
-<img width="916" alt="テーブル仕様書" src="https://github.com/nojinogit/pro_test/assets/127584258/6d77b0b8-fee6-40f6-9566-8be588c1e9be">
+<img width="490" alt="ER図" src="https://github.com/nojinogit/pro_test/assets/127584258/41be7bc5-2691-4fca-8ded-84f0a5ea4e37">
 
 #環境構築  
 ・プロジェクトをコピーしたいディレクトリにて「git clone git@github.com:nojinogit/pro_test.git」を行いプロジェクトをコピー  
