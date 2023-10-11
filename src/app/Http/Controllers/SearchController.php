@@ -60,6 +60,7 @@ class SearchController extends Controller
         if($request->sorting=="avg_low"){
             $have_kutikomi = Shop::with('kutikomis')
                 ->join('kutikomis', 'shops.id', '=', 'kutikomis.shop_id')
+                ->whereNull('kutikomis.deleted_at')
                 ->select('shops.*')
                 ->selectRaw('AVG(kutikomis.score) as kutikomis_avg_score')
                 ->groupBy('shops.id')
