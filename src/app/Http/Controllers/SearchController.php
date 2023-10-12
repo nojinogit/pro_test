@@ -41,22 +41,6 @@ class SearchController extends Controller
         return view('/index',compact('shops','areas','categories'));
         }
 
-        //if($request->sorting=="avg_low"){
-        //$shops = Shop::with('kutikomis')
-        //    ->leftJoin('kutikomis', function($join) {
-        //        $join->on('shops.id', '=', 'kutikomis.shop_id')
-        //            ->whereNull('kutikomis.deleted_at');
-        //    })
-        //    ->select('shops.*')
-        //    ->selectRaw('AVG(kutikomis.score) as kutikomis_avg_score')
-        //    ->groupBy('shops.id')
-        //    ->orderByRaw('ISNULL(kutikomis_avg_score), kutikomis_avg_score ASC')
-        //    ->get();
-        //$areas=Shop::select('area')->distinct()->get();
-        //$categories=Shop::select('category')->distinct()->get();
-        //return view('/index',compact('shops','areas','categories'));
-        //}
-
         if($request->sorting=="avg_low"){
             $have_kutikomi = Shop::with('kutikomis')
                 ->join('kutikomis', 'shops.id', '=', 'kutikomis.shop_id')
@@ -69,11 +53,14 @@ class SearchController extends Controller
 
             $no_have_kutikomi = Shop::with('kutikomis')
                 ->leftJoin('kutikomis', 'shops.id', '=', 'kutikomis.shop_id')
-                ->whereNull('kutikomis.shop_id')
+                ->where(function($query) {
+                    $query->whereNull('kutikomis.shop_id')
+                        ->orWhereNotNull('kutikomis.deleted_at');
+                })
                 ->select('shops.*')
                 ->get();
 
-            $shops = $have_kutikomi->concat($no_have_kutikomi);
+            $shops = $have_kutikomi->concat($no_have_kutikomi)->unique('id');
 
             $areas=Shop::select('area')->distinct()->get();
             $categories=Shop::select('category')->distinct()->get();
